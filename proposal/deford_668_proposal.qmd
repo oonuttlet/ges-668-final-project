@@ -1,0 +1,29 @@
+# GES 668: Building Spatial Datasets
+
+## Final Project Proposal
+
+Wildland fire is a contentious topic, particularly in a post-Industrial-Revolution climate. Since the 1935 advent of the Forest Service's "ten-A.M. policy," fire suppression has been the standard in land management: protection of economic interests including timber stands (for logging) and grasslands (for grazing) has been priority one. However, this philosophy has shifted slowly as the ecological benefits of wildland fire have shown themselves in various ecosystems – lodgepole pines need the heat to open their cones, wild lupine needs fire to clear mid-canopy plants that outcompete it for sunlight, and the clearing of ladder fuels prevent future catastrophic crowning fires. Today, the Forest Service has a new position on wildland fire – when possible, let it burn.
+
+### 1. What are your goals for the project?
+
+My goals for this project are to:
+
+-   Facilitate easier gathering of data related to wildland fire
+
+-   Investigate the historic relationships between wildland fire and people by incorporating Census demographic and economic data
+
+-   Improve my functional and literate programming skills in R
+
+### 2. What data can you use to support your goal?
+
+There are three types of data I'm planning to use in my project. The first is historic federal interagency wildland fire data, which is maintained by the National Interagency Fire Center (NIFC) and distributed via ArcGIS Online products including hosted feature layers and an Esri Hub site. The bulk of the data can be accessed from within R by using the `arcgislayers` package to query the NIFC ArcGIS REST server ([link](https://services3.arcgis.com/T4QMspbfLg3qTGWY/arcgis/rest/services/)).
+
+In particular, the [`WFIGS Current Interagency Fire Perimeter History`](https://services3.arcgis.com/T4QMspbfLg3qTGWY/ArcGIS/rest/services/InterAgencyFirePerimeterHistory_All_Years_View/FeatureServer/0) layer will be used to access historic wildland fire perimeters. The earliest recorded fire in this dataset started in 708 A.D., determined by carbon dating – however, a more realistic subset of wildland fires will be selected based on overlapping temporal ranges with Census data.
+
+The second data repository I'll use to support my work is the Census Bureau's ACS 5-year estimates, which contain annual estimates of demographic information from 2009 onward. ACS information will be accessed using `tidycensus` and `tigris`, which will allow for spatial operations including spatial filtering and population-weighted interpolation.
+
+The third data source I'll utilize in my analysis is the Census Bureau's Longitudinal Employer-Household Dynamics (LEHD) data; in particular, LEHD Origin-Destination Employment Statistics (LODES) data. This dataset details the flows of workers, from home to work, by Census block from 2002-2021 (as of writing, 2024-11-03). This data is made available in R via the `lehdr` package.
+
+### 3. **What is your approach to using data to support your goal?**
+
+Since both the NIFC and Census datasets have geometries and temporal ranges, my goal is to quantify the impact that a given wildland fire event had on the demographic and employment characteristics of the areas geographically near to it. I plan to create an index based on the change in social characteristics the year immediately before and immediately after each fire event, summarized across all geographies the fire could have impacted.
